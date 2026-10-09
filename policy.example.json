@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "allowedSchemes": ["exact"],
+  "assets": [
+    {
+      "network": "eip155:84532",
+      "address": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "symbol": "USDC",
+      "decimals": 6
+    }
+  ],
+  "roles": {
+    "research-agent": {
+      "maxPerPayment": "0.05",
+      "dailyBudget": "0.10",
+      "approvalAbove": "0.02",
+      "allowedPayTo": ["${MERCHANT_ADDRESS}"],
+      "allowedResources": ["http://localhost:4021/*"]
+    },
+    "support-agent": {
+      "maxPerPayment": "0.01",
+      "dailyBudget": "0.03",
+      "allowedPayTo": ["${MERCHANT_ADDRESS}"],
+      "allowedResources": ["http://localhost:4021/weather"]
+    }
+  }
+}

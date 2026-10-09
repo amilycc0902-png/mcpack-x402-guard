@@ -1,0 +1,29 @@
+{
+  "name": "mcpack-x402-guard",
+  "version": "0.1.0",
+  "description": "MCPack payment policy for AI agents: spend limits, budgets, recipient allowlists and approvals for x402 payments on Base",
+  "scripts": {
+    "demo": "tsx src/demo/agent.ts",
+    "server": "tsx src/demo/server.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@x402/core": "^2.28.0",
+    "@x402/evm": "^2.28.0",
+    "@x402/express": "^2.28.0",
+    "@x402/fetch": "^2.28.0",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "viem": "^2.57.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.4",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  },
+  "type": "module"
+}
