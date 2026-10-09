@@ -15,6 +15,19 @@ Part of [MCPack](#relation-to-mcpack), a policy layer for agentic tool stacks. M
 7. Agent with no payment policy          ⛔ UNKNOWN_ROLE (default deny)
 ```
 
+### ✅ Verified on Base Sepolia (Oct 9, 2026)
+
+A full testnet run settled **8 real USDC payments (0.10 USDC)** and blocked **5 policy violations before any signature was created**.
+
+| Scenario | Result | Onchain proof |
+|---|---|---|
+| Small purchase within limits | settled 0.01 USDC | [0x2de4…2756](https://sepolia.basescan.org/tx/0x2de409a9d843fad25fce213f0a7fddf4abb405a88f44beaa68e102dd5ce92756) |
+| Above approval threshold, reviewer approved | settled 0.03 USDC | [0xb303…5998](https://sepolia.basescan.org/tx/0xb30349c761f6aac44670f3b60475945dc399620ea0796f708100f5b13d5c5998) |
+| Budget exhaustion (6 purchases, then blocked) | settled 6 × 0.01 USDC | [0xa20c…ebb8](https://sepolia.basescan.org/tx/0xa20caceea5f32c838cc9c27360b762fef208dd2a97bb9b69f3e22f19aebddeb8) · [0x2a8e…277f](https://sepolia.basescan.org/tx/0x2a8e94973c73e03fd8ece1e0664ade71e5e174b6c65851a9901ba2f4563c277f) · [0xe21d…015b](https://sepolia.basescan.org/tx/0xe21dc740c0fca5f3a7bb0c378812f6e84133d1cf4129cf1a57a08f25be50015b) · [0x83d6…0fdc0](https://sepolia.basescan.org/tx/0x83d6f5c859af6aea19fcc98cfbca337f9dc142650556da2cd456c25260e0fdc0) · [0xef41…5f93](https://sepolia.basescan.org/tx/0xef4105cc81f324f9f248eff5cbf39f3922690d02dc8821ff91dcc1229dc05f93) · [0xfa9c…c5e](https://sepolia.basescan.org/tx/0xfa9c206d11ec6d3e41ea283cae7b1d51967f2a642dd2ecce11e6a656f39a5c5e) |
+| Over per-payment limit · unlisted recipient · daily budget hit · out-of-scope resource · unknown role | blocked | no transaction — nothing was signed |
+
+Agent wallet: [`0x95B1…E4E9`](https://sepolia.basescan.org/address/0x95B19bf5E63f1091DF4bAE65d2C335ce9517E4E9)
+
 ---
 
 ## The problem
@@ -106,13 +119,13 @@ Local mode runs the real x402 client and Express middleware, signs genuine EIP-3
    Never reuse a wallet that holds real funds.
 2. **Fund it with testnet USDC** — go to the [Circle faucet](https://faucet.circle.com/), pick *Base Sepolia*, paste the agent address. No ETH is needed: x402 payments are gasless for the payer (the facilitator submits the transaction).
 3. **Configure** — `cp .env.example .env`, then fill in `AGENT_PRIVATE_KEY`, a `MERCHANT_ADDRESS` you control, and any second address as `UNLISTED_ADDRESS`.
-4. **Start the paid API** (terminal 1)
+4. **Start the paid API** (terminal 1) — `MODE=testnet` in `.env` switches both scripts to Base Sepolia
    ```bash
-   MODE=testnet npm run server
+   npm run server
    ```
 5. **Run the agents** (terminal 2)
    ```bash
-   MODE=testnet npm run demo
+   npm run demo
    ```
    Allowed payments print a `sepolia.basescan.org` link to the real transaction. The full run spends 0.10 USDC.
 

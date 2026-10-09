@@ -9,6 +9,7 @@
  * Run standalone:  npm run server            (local fake facilitator)
  *                  MODE=testnet npm run server (real x402.org facilitator, Base Sepolia)
  */
+import "dotenv/config";
 import express from "express";
 import { pathToFileURL } from "node:url";
 import { paymentMiddleware, x402ResourceServer } from "@x402/express";
